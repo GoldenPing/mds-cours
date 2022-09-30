@@ -2,7 +2,7 @@
 $values = [5,2,8,80,0,5];
 $FIND = 5;
 
-function search(array $values, int $find)
+function search(array $values, int $find):array
 {
     $res = [];
     foreach ($values as $key=>$value) {
@@ -13,9 +13,10 @@ function search(array $values, int $find)
     return $res;
 }
 
+
 $arrayFind = search($values,$FIND);
 
-function showArray(array $arrayFind)
+function showArray(array $arrayFind):void
 {
     echo "Indice trouvé </br>";
     foreach ($arrayFind as $find) {
