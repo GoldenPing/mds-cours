@@ -16,6 +16,7 @@ echo $e;
 $m = new Module("Math",2);
 $m2 = new Module("Fr",4);
 $m3 = new Module("Ang",3);
+$m4 = new Module("Phys",3);
 echo $m;
 
 $mm = new MoyenneModule($e,$m,10.33);
@@ -25,7 +26,8 @@ echo $mm;
 $moyennes = [
     $mm,
     new MoyenneModule($e,$m2,15.65),
-    new MoyenneModule($e,$m3,16.563)
+    new MoyenneModule($e,$m3,16.563),
+    new MoyenneModule($e,$m3,5.186)
 ];
 
 $me = new MoyenneEtudiant($moyennes);

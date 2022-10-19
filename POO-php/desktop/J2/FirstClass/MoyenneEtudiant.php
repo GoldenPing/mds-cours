@@ -53,6 +53,6 @@ class MoyenneEtudiant
             $totalMoy  += $moyenne->moyenne * $moyenne->module->coefficiant;
         }
         $res = $totalMoy / $totalCoef;
-        return $res;
+        return number_format($res,2);
     }
 }
