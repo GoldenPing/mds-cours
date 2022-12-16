@@ -31,4 +31,25 @@ class SecteurController extends Controller
         $this->insert($newSecteur);
         $this->redirect("./index.php?page=viewSecteurs");
     }
+
+    public function formModifSecteur(int $id)
+    {
+        $secteur = $this->findById($id);
+        $data['title'] = "Ajout Secteur";
+        $data['secteur'] = $secteur;
+        $this->render("formModifSecteur",$data);
+    }
+
+    public function doModifSecteur(int $id, string $libelle)
+    {
+        $secteur = $this->findById($id);
+        $secteur->libelle = $libelle;
+        $this->update($secteur);
+        $this->redirect("./index.php?page=viewSecteurs");
+    }
+
+    public function supprimerSecteur(mixed $id)
+    {
+
+    }
 }

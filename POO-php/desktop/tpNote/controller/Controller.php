@@ -61,6 +61,11 @@ abstract class Controller
     }
 
 
+    public function update(Entity $e): void
+    {
+        $this->getManager()->update($e);
+    }
+
     public function render($view, $d = null)
     {
         $data = $d;

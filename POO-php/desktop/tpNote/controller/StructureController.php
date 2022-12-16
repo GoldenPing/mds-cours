@@ -38,8 +38,9 @@ class StructureController extends Controller
 
     public function fromAjoutAssocSecteur(int $id)
     {
+        $secteurController = new SecteurController();
         $data['title'] = "Ajout secteur";
-        $data['secteurs'] = $this->findById($id)->secteurs();
+        $data['secteurs'] = $secteurController->findAll();
         $data['id'] = $id;
         $this->render("formAjoutSecteurToStructure", $data);
     }
@@ -60,7 +61,7 @@ class StructureController extends Controller
     {
         $secteurController = new SecteurController();
         $data['title'] = "modif secteur";
-        $data['secteurs'] = $this->findById($id)->secteurs();
+        $data['secteurs'] = $secteurController->findAll();
         $data['secteur'] = $secteurController->findById($idSec);
         $data['id'] = $id;
         $this->render("formModifSecteurToStructure", $data);

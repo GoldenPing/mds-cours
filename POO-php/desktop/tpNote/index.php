@@ -41,6 +41,14 @@ try {
             case "doModifSecteurAssoc":
                 $structureController->doModifSecteurAssoc($_POST['secteur'], $_POST['idStructure'], $_POST['idOldSec']);
                 break;
+            case "modifSecteur":
+                $secteurController->formModifSecteur($_GET['id']);
+                break;
+            case "doModifSecteur":
+                $secteurController->doModifSecteur($_POST['idSec'],$_POST['libelleSec']);
+                break;
+            case "supprimerSecteur":
+                $secteurController->supprimerSecteur($_GET['id']);
         }
     } else {
         ?>

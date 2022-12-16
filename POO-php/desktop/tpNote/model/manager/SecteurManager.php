@@ -41,4 +41,15 @@ class SecteurManager extends PDOManager
         $sql = "INSERT INTO secteur (LIBELLE) VALUE (:libelle)";
         return $this->executePrepare($sql, ['libelle' => $e->libelle]);
     }
+
+    public function update(Entity $e): PDOStatement
+    {
+        $sql = "UPDATE secteur SET LIBELLE = :libelle WHERE ID = :id";
+        return $this->executePrepare($sql, ['libelle' => $e->libelle, 'id'=>$e->id]);
+    }
+
+    public function delete(int $id): PDOStatement
+    {
+
+    }
 }
