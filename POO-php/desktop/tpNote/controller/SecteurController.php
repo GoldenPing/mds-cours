@@ -37,7 +37,7 @@ class SecteurController extends Controller
         $secteur = $this->findById($id);
         $data['title'] = "Ajout Secteur";
         $data['secteur'] = $secteur;
-        $this->render("formModifSecteur",$data);
+        $this->render("formModifSecteur", $data);
     }
 
     public function doModifSecteur(int $id, string $libelle)
@@ -48,8 +48,17 @@ class SecteurController extends Controller
         $this->redirect("./index.php?page=viewSecteurs");
     }
 
-    public function supprimerSecteur(mixed $id)
+    public function supprimerSecteur(int $id)
     {
+        $secteur = $this->findById($id);
+        if (empty($secteur->structures())) {
+            $this->delete($id);
+            $_SESSION['errors']['supprSecteur'] = '';
+        }else{
+            $str = implode(', ',array_map(function ($a){return $a->nom;},$secteur->structures()));
 
+            $_SESSION['errors']['supprSecteur'] = "Erreur ce secteur est déjà relié à une structure veuillez vérifier les structures : ".$str;
+        }
+        $this->redirect("./index.php?page=viewSecteurs");
     }
 }

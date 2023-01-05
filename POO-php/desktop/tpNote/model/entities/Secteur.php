@@ -2,6 +2,8 @@
 
 namespace tpNote\model\entities;
 
+use tpNote\model\manager\SecteurManager;
+
 class Secteur extends Entity
 {
     public string $libelle;
@@ -15,5 +17,9 @@ class Secteur extends Entity
         $this->libelle = $libelle;
     }
 
-
+    public function structures(): array
+    {
+        $manager = new SecteurManager();
+        return $manager->belongsToMany($this->id);
+    }
 }

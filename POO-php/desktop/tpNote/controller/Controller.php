@@ -66,6 +66,9 @@ abstract class Controller
         $this->getManager()->update($e);
     }
 
+    public function delete(int $id):void{
+        $this->getManager()->delete($id);
+    }
     public function render($view, $d = null)
     {
         $data = $d;

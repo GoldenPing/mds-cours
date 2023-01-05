@@ -45,10 +45,40 @@ try {
                 $secteurController->formModifSecteur($_GET['id']);
                 break;
             case "doModifSecteur":
-                $secteurController->doModifSecteur($_POST['idSec'],$_POST['libelleSec']);
+                $secteurController->doModifSecteur($_POST['idSec'], $_POST['libelleSec']);
                 break;
             case "supprimerSecteur":
                 $secteurController->supprimerSecteur($_GET['id']);
+                break;
+            case "modifStructure":
+                $structureController->formModifStructure($_GET['id']);
+                break;
+            case "doModifStructure":
+                $structureController->doModifStructure(
+                    $_POST['idStr'],
+                    $_POST['nomStr'],
+                    $_POST['rueStr'],
+                    $_POST['cpStr'],
+                    $_POST['villeStr'],
+                    (bool)$_POST['assoStr'],
+                    (int)$_POST['donaStr'],
+                    (int)$_POST['actStr']
+                );
+                break;
+            case "addStructure":
+                $structureController->formAjoutStructure();
+                break;
+            case "doAjoutStructure":
+                var_dump($_POST);
+                $structureController->doAjoutStructure(
+                    $_POST['nomStr'],
+                    $_POST['rueStr'],
+                    $_POST['cpStr'],
+                    $_POST['villeStr'],
+                    isset($_POST['assoStr']),
+                    (int)$_POST['donaStr'],
+                    (int)$_POST['actStr']
+                );
         }
     } else {
         ?>

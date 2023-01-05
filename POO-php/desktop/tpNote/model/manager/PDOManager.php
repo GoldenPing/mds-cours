@@ -32,4 +32,6 @@ abstract class PDOManager
     public abstract function findAll(int $pdoFecthMode): array;
 
     public abstract function insert(Entity $e): PDOStatement;
+
+    public abstract function update(Entity $e): PDOStatement;
 }

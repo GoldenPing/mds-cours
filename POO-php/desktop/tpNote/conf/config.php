@@ -10,7 +10,7 @@ $user = 'u751543619_msqSQL';
 $pass = 'Hop123456789';
 
 $db = new PDO("mysql:host=$host;dbname=$dbname;port=$port", $user, $pass);
-
+session_start();
 
 //------------------------------------------------------------------------
 

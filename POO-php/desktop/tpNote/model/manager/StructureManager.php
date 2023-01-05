@@ -94,6 +94,31 @@ class StructureManager extends PDOManager
 
     public function insert(Entity $e): PDOStatement
     {
-        // TODO: Implement insert() method.
+        $sql = "INSERT INTO `structure`(`NOM`, `RUE`, `CP`, `VILLE`, `ESTASSO`, `NB_DONATEURS`, `NB_ACTIONNAIRES`) VALUES (:nom,:rue,:cp,:ville,:isAsso,:nbDonateurs,:nbActionnaires)";
+        return $this->executePrepare($sql, [
+            'nom' => $e->nom,
+            'rue' => $e->rue,
+            'cp' => $e->cp,
+            'ville' => $e->cp,
+            'isAsso' => $e->isAsso,
+            'nbDonateurs' => $e->nbDonateurs,
+            'nbActionnaires' => $e->nbActionnaires,
+        ]);
+    }
+
+    public function update(Entity $e): PDOStatement
+    {
+        $sql = "UPDATE `structure` SET `NOM`=:nom,`RUE`=:rue,`CP`=:cp,`VILLE`=:ville,`ESTASSO`=:isAsso,`NB_DONATEURS`=:nbDonateurs,`NB_ACTIONNAIRES`=:nbActionnaires WHERE ID = :id";
+        return $this->executePrepare($sql, [
+            'nom' => $e->nom,
+            'rue' => $e->rue,
+            'cp' => $e->cp,
+            'ville' => $e->cp,
+            'isAsso' => $e->isAsso,
+            'nbDonateurs' => $e->nbDonateurs,
+            'nbActionnaires' => $e->nbActionnaires,
+            'id' => $e->id
+
+        ]);
     }
 }
