@@ -21,4 +21,11 @@
         </tr>
     <?php
     endforeach; ?>
+    <?php if (isset($_SESSION['errors']['supprStructure']) && !empty($_SESSION['errors']['supprStructure']) ) : ?>
+        <p>
+            <strong>
+                <?php echo $_SESSION['errors']['supprStructure']; $_SESSION['errors']['supprStructure'] = [] ?>
+            </strong>
+        </p>
+    <?php endif; ?>
 </table>

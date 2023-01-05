@@ -19,11 +19,15 @@
         </tr>
     <?php
     endforeach; ?>
-    <?php if (isset($_SESSION['errors']['supprSecteur']) || empty($_SESSION['errors']['supprSecteur']) ) : ?>
-            <p>
-                <strong>
-                <?php echo $_SESSION['errors']['supprSecteur']; $_SESSION['errors']['supprSecteur'] = [] ?>
-                </strong>
-            </p>
-    <?php endif; ?>
+    <?php
+    if (isset($_SESSION['errors']['supprSecteur']) && !empty($_SESSION['errors']['supprSecteur'])) : ?>
+        <p>
+            <strong>
+                <?php
+                echo $_SESSION['errors']['supprSecteur'];
+                $_SESSION['errors']['supprSecteur'] = [] ?>
+            </strong>
+        </p>
+    <?php
+    endif; ?>
 </table>

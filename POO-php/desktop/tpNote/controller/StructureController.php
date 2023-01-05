@@ -37,17 +37,49 @@ class StructureController extends Controller
         }
     }
 
+    public static function makeIdArrayObject($array, $id)
+    {
+        $result = [];
+        foreach ($array as $item) {
+            $result[$item->$id] = $item;
+        }
+        return $result;
+    }
+
+
+    static public function diffArray($array1, $array2)
+    {
+        foreach ($array2 as $key => $value) {
+            if (!array_key_exists($key, $array1)) {
+                $result[] = $value;
+            }
+        };
+        return $result;
+    }
+
     public function fromAjoutAssocSecteur(int $id)
     {
         $secteurController = new SecteurController();
+        $thisSecteurs = $this->findById($id)->secteurs();
+        $secteurs =
+            self::diffArray(
+                self::makeIdArrayObject($thisSecteurs, 'id'),
+                self::makeIdArrayObject($secteurController->findAll(), 'id')
+            );
         $data['title'] = "Ajout secteur";
-        $data['secteurs'] = $secteurController->findAll();
+        $data['secteurs'] =$secteurs;
         $data['id'] = $id;
         $this->render("formAjoutSecteurToStructure", $data);
     }
 
-    public function doAjoutSecteurAssoc(int $secteur, int $id)
+    public function doAjoutSecteurAssoc(?int $secteur, int $id)
     {
+        if (!$secteur) {
+            $_SESSION['errors']['erreurAssoc'] = "Erreur ! Veuillez sélectionner un secteur valide";
+            $this->redirect("./index.php?page=fromAjoutAssocSecteur&id=" . $id);
+            return;
+        }
+        $_SESSION['errors']['erreurAssoc'] = [];
         $this->manager->assoc($id, $secteur);
         $this->redirect("./index.php?page=oneStructure&id=" . $id);
     }
@@ -61,8 +93,14 @@ class StructureController extends Controller
     public function formModifAssocSecteur(int $id, int $idSec)
     {
         $secteurController = new SecteurController();
+        $thisSecteurs = $this->findById($id)->secteurs();
+        $secteurs =
+            self::diffArray(
+                self::makeIdArrayObject($thisSecteurs, 'id'),
+                self::makeIdArrayObject($secteurController->findAll(), 'id')
+            );
         $data['title'] = "modif secteur";
-        $data['secteurs'] = $secteurController->findAll();
+        $data['secteurs'] = $secteurs;
         $data['secteur'] = $secteurController->findById($idSec);
         $data['id'] = $id;
         $this->render("formModifSecteurToStructure", $data);
@@ -119,11 +157,11 @@ class StructureController extends Controller
         int $actStr
     ) {
         if (strlen($cpStr) !== 5) {
-            $errors [] ="Le code postal n'est pas valide";
+            $errors [] = "Le code postal n'est pas valide";
         }
 
         if ($assoStr && $actStr !== 0) {
-            $errors [] =  "Une association ne peut avoir d'actionnaire";
+            $errors [] = "Une association ne peut avoir d'actionnaire";
         }
 
         if (!$assoStr && $donaStr !== 0) {
@@ -144,9 +182,28 @@ class StructureController extends Controller
             $this->insert($structure);
             $this->redirect("./index.php?page=viewStructures");
             $_SESSION['errors']['addStructure'] = [];
-        }else{
+        } else {
             $_SESSION['errors']['addStructure'] = $errors;
             $this->redirect("./index.php?page=addStructure");
         }
+    }
+
+    public function supprimerStructure(int $id)
+    {
+        $secteur = $this->findById($id);
+        if (empty($secteur->secteurs())) {
+            $this->delete($id);
+            $_SESSION['errors']['supprStructure'] = '';
+        } else {
+            $str = implode(
+                ', ',
+                array_map(function ($a) {
+                    return $a->libelle;
+                }, $secteur->secteurs())
+            );
+
+            $_SESSION['errors']['supprStructure'] = "Erreur cette structure est déjà relié à une structure veuillez vérifier les secteurs : " . $str;
+        }
+        $this->redirect("./index.php?page=viewStructures");
     }
 }

@@ -30,7 +30,7 @@ try {
                 $structureController->fromAjoutAssocSecteur($_GET['id']);
                 break;
             case "doAjoutSecteurAssoc":
-                $structureController->doAjoutSecteurAssoc($_POST['secteur'], $_POST['idStructure']);
+                $structureController->doAjoutSecteurAssoc(($_POST['secteur']==='')?? null, $_POST['idStructure']);
                 break;
             case "deassocSecteur":
                 $structureController->deassocSecteur($_GET['idStr'], $_GET['idSec']);
@@ -69,7 +69,6 @@ try {
                 $structureController->formAjoutStructure();
                 break;
             case "doAjoutStructure":
-                var_dump($_POST);
                 $structureController->doAjoutStructure(
                     $_POST['nomStr'],
                     $_POST['rueStr'],
@@ -79,6 +78,9 @@ try {
                     (int)$_POST['donaStr'],
                     (int)$_POST['actStr']
                 );
+                break;
+            case "supprimerStructure":
+                $structureController->supprimerStructure($_GET['id']);
         }
     } else {
         ?>

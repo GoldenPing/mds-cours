@@ -15,3 +15,12 @@
     </select>
     <input type="submit" value="valider">
 </form>
+
+<?php if (isset($_SESSION['errors']['erreurAssoc']) && !empty($_SESSION['errors']['erreurAssoc']) ) : ?>
+    <p>
+        <strong>
+            <?php
+            echo $_SESSION['errors']['erreurAssoc']; $_SESSION['errors']['erreurAssoc'] = [] ?>
+        </strong>
+    </p>
+<?php endif; ?>
